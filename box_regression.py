@@ -3,7 +3,7 @@ import math
 from typing import List, Tuple
 import torch
 from fvcore.nn import giou_loss, smooth_l1_loss
-from multibox_loss import diou_loss, ciou_loss #add diou and ciou loss
+from cxr_abnorm_det.multibox_loss import diou_loss, ciou_loss #add diou and ciou loss
 from detectron2.layers import cat
 from detectron2.structures import Boxes
 
