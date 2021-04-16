@@ -3,7 +3,7 @@ import torch
 import math
 
 
-def ciou(bboxes1, bboxes2):
+def ciou_loss(bboxes1, bboxes2):
     bboxes1 = torch.sigmoid(bboxes1)
     bboxes2 = torch.sigmoid(bboxes2)
     rows = bboxes1.shape[0]
@@ -54,7 +54,7 @@ def ciou(bboxes1, bboxes2):
         cious = cious.T
     return torch.sum(1-cious)
 
-def diou(bboxes1, bboxes2):
+def diou_loss(bboxes1, bboxes2):
     bboxes1 = torch.sigmoid(bboxes1)
     bboxes2 = torch.sigmoid(bboxes2)
     rows = bboxes1.shape[0]
