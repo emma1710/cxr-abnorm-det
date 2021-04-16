@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import torch
-from utils import timer
+import timer
 
 from data import cfg
 
