@@ -228,8 +228,10 @@ def _dense_box_regression_loss(
     pred_anchor_deltas: List[torch.Tensor],
     gt_boxes: List[torch.Tensor],
     fg_mask: torch.Tensor,
+    loss_bbox_weight = 1,
     box_reg_loss_type="smooth_l1",
     smooth_l1_beta=0.0,
+    
 ):
     """
     Compute loss for dense multi-level box regression.
@@ -265,12 +267,12 @@ def _dense_box_regression_loss(
         pred_boxes = [
             box2box_transform.apply_deltas(k, anchors) for k in cat(pred_anchor_deltas, dim=1)
         ]
-        loss_box_reg = diou_loss(torch.stack(pred_boxes)[fg_mask], torch.stack(gt_boxes)[fg_mask])
+        loss_box_reg = loss_bbox_weight*diou_loss(torch.stack(pred_boxes)[fg_mask], torch.stack(gt_boxes)[fg_mask])
     elif box_reg_loss_type == "ciou":
         pred_boxes = [
             box2box_transform.apply_deltas(k, anchors) for k in cat(pred_anchor_deltas, dim=1)
         ]
-        loss_box_reg = ciou_loss(torch.stack(pred_boxes)[fg_mask], torch.stack(gt_boxes)[fg_mask])
+        loss_box_reg = loss_bbox_weight*ciou_loss(torch.stack(pred_boxes)[fg_mask], torch.stack(gt_boxes)[fg_mask])
     else:
         raise ValueError(f"Invalid dense box regression loss type '{box_reg_loss_type}'")
     return loss_box_reg
