@@ -52,7 +52,7 @@ def ciou_loss(bboxes1, bboxes2):
     cious = torch.clamp(cious,min=-1.0,max = 1.0)
     if exchange:
         cious = cious.T
-    return torch.sum(1-cious)
+    return 1e6*torch.sum(1-cious)
 
 def diou_loss(bboxes1, bboxes2):
     bboxes1 = torch.sigmoid(bboxes1)
@@ -99,4 +99,4 @@ def diou_loss(bboxes1, bboxes2):
     dious = torch.clamp(dious,min=-1.0,max = 1.0)
     if exchange:
         dious = dious.T
-    return torch.sum(1-dious)
+    return 1e6*torch.sum(1-dious)
